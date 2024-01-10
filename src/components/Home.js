@@ -64,10 +64,6 @@ function Home() {
 
     return (
         <div>
-            <header>
-                <Navigation account={account} setAccount={setAccount}/>
-                <h2 className="header__title"><strong>Event</strong> Tickets</h2>
-            </header>
             <Sort />
             <div className='cards'>
                 {events.map((event, index) => (

@@ -2,6 +2,7 @@ import Navigation from './Navigation';
 import { Outlet } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { ethers } from 'ethers';
+import { Routes, Route } from 'react-router-dom'
 
 // ABIs
 import TokenMasterABI from '../abis/TokenMaster.json';
@@ -9,6 +10,7 @@ import TokenMasterABI from '../abis/TokenMaster.json';
 // Config
 import config from '../config.json';
 import Home from './Home';
+import Sell from './Sell';
 
 const Layout = () => {
 
@@ -31,7 +33,7 @@ const Layout = () => {
         // get the contract address
         const address = config[network.chainId].TokenMaster.address
 
-        // deploy the contract
+        // get the contract from the scripts deployment
         const tokenMaster = new ethers.Contract(address, TokenMasterABI, provider);
         setTokenMaster(tokenMaster);
         
@@ -63,8 +65,17 @@ const Layout = () => {
         <>
             <header>
                 <Navigation account={account} setAccount={setAccount}/>
-                <h2 className="header__title"><strong>Event</strong> Tickets</h2>
+                <h2 className="header__title"><strong>Token</strong> Market</h2>
             </header>
+            <Routes>
+                <Route path = "/" index element = {<Home />} />
+                <Route path = "sell" element = {<Sell
+                tokenMaster={tokenMaster}
+                provider={provider}
+                />} />
+            </Routes>
+
+
         </>
     )
 }
